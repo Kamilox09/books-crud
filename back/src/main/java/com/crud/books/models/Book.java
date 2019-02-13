@@ -1,10 +1,7 @@
 package com.crud.books.models;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Book {
@@ -18,6 +15,12 @@ public class Book {
     private String description;
 
     private Integer numberOfPages;
+
+    @ManyToOne
+    private Author author;
+
+    @ManyToOne
+    private Category category;
 
 
 }

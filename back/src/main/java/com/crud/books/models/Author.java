@@ -1,10 +1,8 @@
 package com.crud.books.models;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Author {
@@ -14,4 +12,9 @@ public class Author {
     private Integer id;
 
     private String fullName;
+
+    @OneToMany(mappedBy = "author")
+    private List<Book> booksOfAuthor;
+
+
 }
