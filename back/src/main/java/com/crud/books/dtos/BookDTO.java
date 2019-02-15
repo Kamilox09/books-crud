@@ -1,13 +1,6 @@
-package com.crud.books.models;
+package com.crud.books.dtos;
 
-
-import javax.persistence.*;
-
-@Entity
-public class Book {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class BookDTO {
     private Integer id;
 
     private String title;
@@ -16,11 +9,9 @@ public class Book {
 
     private Integer numberOfPages;
 
-    @ManyToOne
-    private Author author;
+    private String authorName;
 
-    @ManyToOne
-    private Category category;
+    private String categoryName;
 
     public Integer getId() {
         return id;
@@ -54,19 +45,19 @@ public class Book {
         this.numberOfPages = numberOfPages;
     }
 
-    public Author getAuthor() {
-        return author;
+    public String getAuthorName() {
+        return authorName;
     }
 
-    public void setAuthor(Author author) {
-        this.author = author;
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
     }
 
-    public Category getCategory() {
-        return category;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 }
