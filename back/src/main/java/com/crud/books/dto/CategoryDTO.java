@@ -1,4 +1,4 @@
-package com.crud.books.dtos;
+package com.crud.books.dto;
 
 public class CategoryDTO {
     private Integer id;

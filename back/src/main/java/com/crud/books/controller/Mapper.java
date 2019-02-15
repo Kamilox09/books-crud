@@ -1,10 +1,10 @@
-package com.crud.books.controllers;
+package com.crud.books.controller;
 
-import com.crud.books.dtos.BookDTO;
-import com.crud.books.dtos.CategoryDTO;
-import com.crud.books.models.Author;
-import com.crud.books.models.Book;
-import com.crud.books.models.Category;
+import com.crud.books.dto.BookDTO;
+import com.crud.books.dto.CategoryDTO;
+import com.crud.books.model.Author;
+import com.crud.books.model.Book;
+import com.crud.books.model.Category;
 
 public class Mapper {
 
