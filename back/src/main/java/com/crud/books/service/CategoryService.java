@@ -1,6 +1,7 @@
 package com.crud.books.service;
 
 
+import com.crud.books.dto.CategoryDTO;
 import com.crud.books.model.Category;
 import com.crud.books.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,4 +22,16 @@ public class CategoryService {
     public List<Category> getAllCategories(){
         return this.categoryRepository.findAll();
     }
+
+    public Category save(Category category){
+        if(categoryRepository.existsByName(category.getName()))
+            return null;
+        return this.categoryRepository.save(category);
+    }
+
+    public Category getCategoryById(Integer id){
+        return this.categoryRepository.getOne(id);
+    }
+
+
 }
