@@ -5,6 +5,8 @@ import com.crud.books.dto.CategoryDTO;
 import com.crud.books.model.Category;
 import com.crud.books.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,10 +29,19 @@ public class CategoryController {
 
 
     @GetMapping
-    public ResponseEntity<List<CategoryDTO>> getAllCategories() {
-        List<Category> categories = this.categoryService.getAllCategories();
+    public ResponseEntity<List<CategoryDTO>> getAllCategories(@RequestParam(value = "page", required = false) Integer page,
+                                                              @RequestParam(value = "size", required = false) Integer size) {
+
+        if (page == null || size == null) {
+            List<Category> categories = this.categoryService.getAllCategories();
+            return new ResponseEntity<List<CategoryDTO>>(categories.stream()
+                    .map(x -> Mapper.mapToCategoryDTO(x))
+                    .collect(Collectors.toList()), HttpStatus.OK);
+        }
+        Pageable pageInfo = PageRequest.of(page - 1, size);
+        List<Category> categories = this.categoryService.getPageOfCategories(pageInfo).getContent();
         return new ResponseEntity<List<CategoryDTO>>(categories.stream()
-                .map(x -> Mapper.mapToCategoryDTO(x))
+                .map(Mapper::mapToCategoryDTO)
                 .collect(Collectors.toList()), HttpStatus.OK);
     }
 
@@ -64,7 +75,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteCategory(@PathVariable Integer id){
+    public ResponseEntity<String> deleteCategory(@PathVariable Integer id) {
         Optional<Category> check = this.categoryService.getCategoryById(id);
 
         if (!check.isPresent()) {

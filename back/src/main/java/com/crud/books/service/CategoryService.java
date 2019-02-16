@@ -5,6 +5,8 @@ import com.crud.books.dto.CategoryDTO;
 import com.crud.books.model.Category;
 import com.crud.books.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,6 +38,10 @@ public class CategoryService {
 
     public void deleteCategory(Category category){
         this.categoryRepository.delete(category);
+    }
+
+    public Page<Category> getPageOfCategories(Pageable pageable){
+        return this.categoryRepository.findAll(pageable);
     }
 
 
