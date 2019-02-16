@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -46,12 +47,13 @@ public class CategoryController {
 
     @PutMapping("/{id}")
     public ResponseEntity<String> updateCategory(@PathVariable Integer id, @Valid @RequestBody CategoryDTO dto) {
-        Category category = this.categoryService.getCategoryById(id);
+        Optional<Category> check = this.categoryService.getCategoryById(id);
 
-        if (category == null) {
+        if (!check.isPresent()) {
             return new ResponseEntity<String>("Category you want to update does not exist", HttpStatus.BAD_REQUEST);
         }
 
+        Category category = check.get();
         CategoryController.mergeCategory(dto, category);
 
         category = this.categoryService.save(category);
@@ -59,6 +61,19 @@ public class CategoryController {
             return new ResponseEntity<String>("Category with given name already exists.", HttpStatus.CONFLICT);
         }
         return new ResponseEntity<String>("Category updated", HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteCategory(@PathVariable Integer id){
+        Optional<Category> check = this.categoryService.getCategoryById(id);
+
+        if (!check.isPresent()) {
+            return new ResponseEntity<String>("Category you want to delete does not exist", HttpStatus.BAD_REQUEST);
+        }
+
+        this.categoryService.deleteCategory(check.get());
+
+        return new ResponseEntity<String>("Category deleted", HttpStatus.NO_CONTENT);
     }
 
     static private void mergeCategory(CategoryDTO dto, Category entity) {
