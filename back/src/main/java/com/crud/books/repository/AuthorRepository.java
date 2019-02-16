@@ -1,6 +1,6 @@
-package com.crud.books.repositories;
+package com.crud.books.repository;
 
-import com.crud.books.models.Author;
+import com.crud.books.model.Author;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;

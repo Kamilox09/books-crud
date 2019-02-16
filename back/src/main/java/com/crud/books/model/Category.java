@@ -1,4 +1,4 @@
-package com.crud.books.models;
+package com.crud.books.model;
 
 import javax.persistence.*;
 import java.util.List;

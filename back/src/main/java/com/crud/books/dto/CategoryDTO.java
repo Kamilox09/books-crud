@@ -1,8 +1,11 @@
-package com.crud.books.dtos;
+package com.crud.books.dto;
+
+import javax.validation.constraints.NotBlank;
 
 public class CategoryDTO {
     private Integer id;
 
+    @NotBlank
     private String name;
 
     public Integer getId() {
