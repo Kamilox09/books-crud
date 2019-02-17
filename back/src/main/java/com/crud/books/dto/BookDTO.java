@@ -1,16 +1,22 @@
 package com.crud.books.dto;
 
+import javax.validation.constraints.NotBlank;
+
 public class BookDTO {
     private Integer id;
 
+    @NotBlank
     private String title;
 
+    @NotBlank
     private String description;
 
     private Integer numberOfPages;
 
+    @NotBlank
     private String authorName;
 
+    @NotBlank
     private String categoryName;
 
     public Integer getId() {

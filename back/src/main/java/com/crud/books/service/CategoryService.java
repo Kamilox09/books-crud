@@ -1,7 +1,6 @@
 package com.crud.books.service;
 
 
-import com.crud.books.dto.CategoryDTO;
 import com.crud.books.model.Category;
 import com.crud.books.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +41,10 @@ public class CategoryService {
 
     public Page<Category> getPageOfCategories(Pageable pageable){
         return this.categoryRepository.findAll(pageable);
+    }
+
+    public Category getCategoryByName(String name){
+        return this.categoryRepository.getByName(name);
     }
 
 
