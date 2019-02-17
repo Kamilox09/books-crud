@@ -42,4 +42,8 @@ public class BookService {
     public Optional<Book> getBookById(Integer id){
         return this.bookRepository.findById(id);
     }
+
+    public void deleteBook(Book book){
+        this.bookRepository.delete(book);
+    }
 }

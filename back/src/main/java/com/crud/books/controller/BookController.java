@@ -71,6 +71,20 @@ public class BookController {
         return new ResponseEntity<String>("Book updated", HttpStatus.OK);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteBook(@PathVariable Integer id){
+        Optional<Book> check = this.bookService.getBookById(id);
+
+        if(!check.isPresent()){
+            return new ResponseEntity<String>("Book you want to delete does not exist", HttpStatus.BAD_REQUEST);
+        }
+
+        this.bookService.deleteBook(check.get());
+
+        return new ResponseEntity<String>("Book deleted", HttpStatus.NO_CONTENT);
+
+    }
+
     static private void merge(BookDTO dto, Book entity){
         entity.setTitle(dto.getTitle());
         entity.setDescription(dto.getDescription());
