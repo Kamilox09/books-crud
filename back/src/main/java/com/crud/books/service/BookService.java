@@ -4,7 +4,11 @@ package com.crud.books.service;
 import com.crud.books.model.Book;
 import com.crud.books.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class BookService {
@@ -22,6 +26,10 @@ public class BookService {
         this.authorService = authorService;
     }
 
+    public Page<Book> getPageOfBooks(Pageable pageable){
+        return this.bookRepository.findAll(pageable);
+    }
+
     public Book save(Book book) {
         if (this.bookRepository.existsByTitle(book.getTitle())) {
             return null;
@@ -29,5 +37,9 @@ public class BookService {
         book.setCategory(this.categoryService.getCategoryByName(book.getCategory().getName()));
         book.setAuthor(this.authorService.getAuthorIfExistsCreateIfNot(book.getAuthor()));
         return this.bookRepository.save(book);
+    }
+
+    public Optional<Book> getBookById(Integer id){
+        return this.bookRepository.findById(id);
     }
 }
