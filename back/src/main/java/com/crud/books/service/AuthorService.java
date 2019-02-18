@@ -26,4 +26,8 @@ public class AuthorService {
 
         return this.save(author);
     }
+
+    public Author getByFullName(String name){
+        return this.authorRepository.getByFullName(name);
+    }
 }

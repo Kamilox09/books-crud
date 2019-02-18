@@ -30,10 +30,21 @@ public class BookController {
     }
 
     @GetMapping
-    public ResponseEntity<List<BookDTO>> getBooks(@RequestParam("page") Integer page, @RequestParam("size") Integer size){
+    public ResponseEntity<List<BookDTO>> getBooks(@RequestParam("page") Integer page,
+                                                  @RequestParam("size") Integer size,
+                                                  @RequestParam(value = "category", required = false) String category,
+                                                  @RequestParam(value = "author", required = false) String author){
         Pageable pageable = PageRequest.of(page-1, size);
-
-        List<Book> books = this.bookService.getPageOfBooks(pageable).getContent();
+        List<Book> books;
+        if(category != null && author != null) {
+            books = this.bookService.getBooksByAuthorNameAndCategoryName(category, author, pageable);
+        } else if(category == null && author != null) {
+            books = this.bookService.getBooksByAuthorName(author, pageable);
+        } else if (category != null && author == null) {
+            books = this.bookService.getBooksByCategoryName(category, pageable);
+        } else {
+            books = this.bookService.getPageOfBooks(pageable).getContent();
+        }
         return new ResponseEntity<List<BookDTO>>(books.stream()
                 .map(Mapper::mapToBookDTO)
                 .collect(Collectors.toList()),HttpStatus.OK);
