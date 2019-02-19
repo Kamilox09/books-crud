@@ -17,7 +17,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("books")
+@RequestMapping("books/category")
 public class CategoryController {
 
     private final CategoryService categoryService;
