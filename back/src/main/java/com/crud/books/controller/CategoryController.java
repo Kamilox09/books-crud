@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("books/category")
+@CrossOrigin(origins="*")
 public class CategoryController {
 
     private final CategoryService categoryService;
