@@ -10,13 +10,44 @@ import {Book} from "../models/book.model";
 export class BookComponent implements OnInit {
 
   books: Array<Book>;
+  page: number = 1;
+  size: number = 2;
+  totalElements: number;
+  loading = false;
 
   constructor(private bookService: BookService) { }
 
   ngOnInit() {
-    this.bookService.getBooks(10,1).subscribe(x => {
-      this.books = x;
+    this.getBooks();
+  }
+
+  getBooks(){
+    this.loading = true;
+    this.bookService.getBooks(this.size,this.page).subscribe(x => {
+      this.books = x['content'];
+      this.totalElements = x['totalElements'];
+      this.loading=false;
     });
+  }
+
+  goToPage(n: number): void{
+    this.page = n;
+    this.getBooks();
+  }
+
+  onNext(): void {
+    this.page++;
+    this.getBooks();
+  }
+
+  onPrev(): void {
+    this.page--;
+    this.getBooks();
+  }
+
+  onChangeSize(n: number): void {
+    this.size = n;
+    this.getBooks();
   }
 
 }

@@ -1,6 +1,7 @@
 package com.crud.books.repository;
 
 import com.crud.books.model.Book;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -15,13 +16,13 @@ public interface BookRepository extends JpaRepository<Book, Integer>, JpaSpecifi
     boolean existsByTitle(String title);
 
     @Query(value="select * from Book b where b.category_id=:id", nativeQuery = true)
-    List<Book> getBooksByCategoryId(@Param("id") Integer id, Pageable pageable);
+    Page<Book> getBooksByCategoryId(@Param("id") Integer id, Pageable pageable);
 
     @Query(value = "select * from Book b where b.author_id=:id", nativeQuery = true)
-    List<Book> getBooksByAuthorId(@Param("id") Integer id, Pageable pageable);
+    Page<Book> getBooksByAuthorId(@Param("id") Integer id, Pageable pageable);
 
     @Query(value="select * from Book b where b.category_id=:category_id and b.author_id=:author_id", nativeQuery = true)
-    List<Book> getBooksByAuthorIdAndCategoryId(@Param("author_id") Integer author_id,
+    Page<Book> getBooksByAuthorIdAndCategoryId(@Param("author_id") Integer author_id,
                                                @Param("category_id") Integer category_id,
                                                Pageable pageable);
 

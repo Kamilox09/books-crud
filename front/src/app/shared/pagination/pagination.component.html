@@ -1,0 +1,13 @@
+<div class="pagination" *ngIf="count>0">
+  <button (click)="onPrev()" class="btn btn-light" [disabled]="page === 1 || loading">Wstecz</button>
+  <button *ngFor="let pageNum of getPages()" [ngClass]="page==pageNum?'btn btn-primary':'btn btn-light'" (click)="onPage(pageNum)">{{pageNum}}</button>
+  <button (click)="onNext()" class="btn btn-light" [disabled]="lastPage() || loading">Następna</button>
+  <span class="page-size">
+    <label for="sel">Elementów na stronę:</label>
+  <select id="sel" (change)="onSelectSize($event)" class="form-control">
+    <option value="5" >5</option>
+    <option value="10" >10</option>
+    <option value="15">15</option>
+  </select>
+    </span>
+</div>

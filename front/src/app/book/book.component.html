@@ -9,7 +9,16 @@
   <tbody>
     <tr app-book-element *ngFor="let book of books"
         [book]="book">
-
     </tr>
   </tbody>
 </table>
+<app-pagination
+  (goPage)="goToPage($event)"
+  (goNext)="onNext()"
+  (goPrev)="onPrev()"
+  (setSize)="onChangeSize($event)"
+  [pagesToShow]="3"
+  [page]="page"
+  [perPage]="size"
+  [count]="totalElements"
+></app-pagination>

@@ -7,6 +7,7 @@ import com.crud.books.model.Book;
 import com.crud.books.model.Category;
 import com.crud.books.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -31,12 +32,12 @@ public class BookController {
     }
 
     @GetMapping
-    public ResponseEntity<List<BookDTO>> getBooks(@RequestParam("page") Integer page,
+    public ResponseEntity<Page<BookDTO>> getBooks(@RequestParam("page") Integer page,
                                                   @RequestParam("size") Integer size,
                                                   @RequestParam(value = "category", required = false) String category,
                                                   @RequestParam(value = "author", required = false) String author){
         Pageable pageable = PageRequest.of(page-1, size);
-        List<Book> books;
+        Page<Book> books;
         if(category != null && author != null) {
             books = this.bookService.getBooksByAuthorNameAndCategoryName(category, author, pageable);
         } else if(category == null && author != null) {
@@ -44,11 +45,11 @@ public class BookController {
         } else if (category != null && author == null) {
             books = this.bookService.getBooksByCategoryName(category, pageable);
         } else {
-            books = this.bookService.getPageOfBooks(pageable).getContent();
+            books = this.bookService.getPageOfBooks(pageable);
         }
-        return new ResponseEntity<List<BookDTO>>(books.stream()
-                .map(Mapper::mapToBookDTO)
-                .collect(Collectors.toList()),HttpStatus.OK);
+        return new ResponseEntity<Page<BookDTO>>(books
+                .map(Mapper::mapToBookDTO),
+                HttpStatus.OK);
     }
 
     @PostMapping
