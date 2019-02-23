@@ -5,6 +5,7 @@ import com.crud.books.model.Category;
 import com.crud.books.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +22,8 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    public List<Category> getAllCategories(){
-        return this.categoryRepository.findAll();
+    public Page<Category> getAllCategories(){
+        return new PageImpl<Category>(this.categoryRepository.findAll());
     }
 
     public Category save(Category category){

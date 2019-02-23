@@ -5,6 +5,7 @@ import com.crud.books.dto.CategoryDTO;
 import com.crud.books.model.Category;
 import com.crud.books.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("books/category")
+@RequestMapping("/category")
 @CrossOrigin(origins="*")
 public class CategoryController {
 
@@ -30,20 +31,18 @@ public class CategoryController {
 
 
     @GetMapping
-    public ResponseEntity<List<CategoryDTO>> getAllCategories(@RequestParam(value = "page", required = false) Integer page,
+    public ResponseEntity<Page<CategoryDTO>> getAllCategories(@RequestParam(value = "page", required = false) Integer page,
                                                               @RequestParam(value = "size", required = false) Integer size) {
+        Page<Category> categories;
 
         if (page == null || size == null) {
-            List<Category> categories = this.categoryService.getAllCategories();
-            return new ResponseEntity<List<CategoryDTO>>(categories.stream()
-                    .map(x -> Mapper.mapToCategoryDTO(x))
-                    .collect(Collectors.toList()), HttpStatus.OK);
+            categories = this.categoryService.getAllCategories();
+        } else {
+            Pageable pageInfo = PageRequest.of(page - 1, size);
+            categories = this.categoryService.getPageOfCategories(pageInfo);
         }
-        Pageable pageInfo = PageRequest.of(page - 1, size);
-        List<Category> categories = this.categoryService.getPageOfCategories(pageInfo).getContent();
-        return new ResponseEntity<List<CategoryDTO>>(categories.stream()
-                .map(Mapper::mapToCategoryDTO)
-                .collect(Collectors.toList()), HttpStatus.OK);
+        return new ResponseEntity<Page<CategoryDTO>>(categories
+                .map(Mapper::mapToCategoryDTO), HttpStatus.OK);
     }
 
     @PostMapping

@@ -9,13 +9,16 @@ import { BookComponent } from './book/book.component';
 import {BookService} from "./services/book.service";
 import { BookElementComponent } from './book/book-element/book-element.component';
 import { PaginationComponent } from './shared/pagination/pagination.component';
+import { AddBookComponent } from './book/add-book/add-book.component';
+import {CategoryService} from "./services/category.service";
 
 @NgModule({
   declarations: [
     AppComponent,
     BookComponent,
     BookElementComponent,
-    PaginationComponent
+    PaginationComponent,
+    AddBookComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +26,9 @@ import { PaginationComponent } from './shared/pagination/pagination.component';
     FormsModule,
     HttpClientModule
   ],
-  providers: [BookService],
+  providers: [
+    BookService,
+    CategoryService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

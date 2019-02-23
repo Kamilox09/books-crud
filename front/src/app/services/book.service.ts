@@ -7,6 +7,7 @@ import {Observable} from "rxjs";
   providedIn: 'root'
 })
 export class BookService {
+  private url: string = 'http://localhost:8081';
 
   constructor(private http: HttpClient) { }
 
@@ -14,7 +15,11 @@ export class BookService {
     let params = new HttpParams();
     params = params.set('size', size+'');
     params = params.set('page', page+'');
-    return this.http.get<Array<Book>>('http://localhost:8081/books', {params: params});
+    return this.http.get<Array<Book>>(this.url +'/books', {params: params});
 
+  }
+
+  public addBook(book: Book): Observable<Book> {
+    return this.http.post<Book>(this.url +'/books', book);
   }
 }
