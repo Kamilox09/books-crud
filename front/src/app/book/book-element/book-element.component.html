@@ -1,5 +1,11 @@
+  <td><button class="btn btn-light" type="button" data-toggle="collapse"
+              [attr.data-target]="'#collapseElement'+book.id" aria-expanded="false"
+              aria-controls="collapseElement">Pokaż więcej</button>
 
+  </td>
   <td>{{book.title}}</td>
   <td>{{book.authorName}}</td>
   <td>{{book.categoryName}}</td>
+  <td><button class="btn btn-light" (click)="onEditBook(book)">Edytuj</button> </td>
+
 

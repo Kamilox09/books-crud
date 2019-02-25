@@ -81,11 +81,8 @@ public class BookController {
         Book book = check.get();
         BookController.merge(dto,book);
 
-        book = this.bookService.save(book);
-        if(book == null){
-            json.put("message", "Book with given title already exists");
-            return new ResponseEntity<String>(json.toJSONString(), HttpStatus.CONFLICT);
-        }
+        this.bookService.edit(book);
+
         json.put("message", "Book updated");
         return new ResponseEntity<String>(json.toJSONString(), HttpStatus.OK);
     }

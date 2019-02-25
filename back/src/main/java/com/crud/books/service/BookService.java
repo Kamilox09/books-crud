@@ -43,6 +43,12 @@ public class BookService {
         return this.bookRepository.save(book);
     }
 
+    public void edit(Book book){
+        book.setCategory(this.categoryService.getCategoryByName(book.getCategory().getName()));
+        book.setAuthor(this.authorService.getAuthorIfExistsCreateIfNot(book.getAuthor()));
+        this.bookRepository.save(book);
+    }
+
     public Optional<Book> getBookById(Integer id){
         return this.bookRepository.findById(id);
     }

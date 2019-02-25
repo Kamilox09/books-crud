@@ -11,6 +11,7 @@ import { BookElementComponent } from './book/book-element/book-element.component
 import { PaginationComponent } from './shared/pagination/pagination.component';
 import { AddBookComponent } from './book/add-book/add-book.component';
 import {CategoryService} from "./services/category.service";
+import { EditBookComponent } from './book/edit-book/edit-book.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import {CategoryService} from "./services/category.service";
     BookComponent,
     BookElementComponent,
     PaginationComponent,
-    AddBookComponent
+    AddBookComponent,
+    EditBookComponent
   ],
   imports: [
     BrowserModule,

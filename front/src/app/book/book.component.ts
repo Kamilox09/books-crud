@@ -15,6 +15,8 @@ export class BookComponent implements OnInit {
   totalElements: number;
   loading = false;
   adding: boolean = false;
+  bookToEdit: Book;
+  editing: boolean = false;
 
   constructor(private bookService: BookService) {
   }
@@ -58,6 +60,16 @@ export class BookComponent implements OnInit {
 
   onAdd(): void {
     this.adding = true;
+  }
+
+  setBookToEdit(book: Book){
+    this.bookToEdit = book;
+    this.editing = true;
+  }
+
+  onEdited(): void {
+    this.editing = false;
+    this.bookToEdit = null;
   }
 
 }
