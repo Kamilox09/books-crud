@@ -72,4 +72,8 @@ export class BookComponent implements OnInit {
     this.bookToEdit = null;
   }
 
+  onDeleted(): void {
+    this.getBooks();
+  }
+
 }

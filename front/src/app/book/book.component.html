@@ -15,7 +15,8 @@
   <ng-container *ngFor="let book of books">
     <tr app-book-element
         [book]="book"
-        (editBook)="setBookToEdit($event)">
+        (editBook)="setBookToEdit($event)"
+        (deleted)="onDeleted()">
     </tr>
     <tr class="collapse" id="collapseElement{{book.id}}">
       <td><strong>Opis: </strong>{{book.description}}</td>
