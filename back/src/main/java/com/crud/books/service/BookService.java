@@ -43,6 +43,12 @@ public class BookService {
         return this.bookRepository.save(book);
     }
 
+    public void edit(Book book){
+        book.setCategory(this.categoryService.getCategoryByName(book.getCategory().getName()));
+        book.setAuthor(this.authorService.getAuthorIfExistsCreateIfNot(book.getAuthor()));
+        this.bookRepository.save(book);
+    }
+
     public Optional<Book> getBookById(Integer id){
         return this.bookRepository.findById(id);
     }
@@ -51,25 +57,25 @@ public class BookService {
         this.bookRepository.delete(book);
     }
 
-    public List<Book> getBooksByCategoryName(String name, Pageable pageable){
+    public Page<Book> getBooksByCategoryName(String name, Pageable pageable){
         Category category = this.categoryService.getCategoryByName(name);
         if(category!=null)
             return this.bookRepository.getBooksByCategoryId(category.getId(), pageable);
-        return Collections.emptyList();
+        return Page.empty();
     }
 
-    public List<Book> getBooksByAuthorName(String name, Pageable pageable){
+    public Page<Book> getBooksByAuthorName(String name, Pageable pageable){
         Author author = this.authorService.getByFullName(name);
         if (author!=null)
             return this.bookRepository.getBooksByAuthorId(author.getId(), pageable);
-        return Collections.emptyList();
+        return Page.empty();
     }
 
-    public List<Book> getBooksByAuthorNameAndCategoryName(String categoryName, String authorName, Pageable pageable){
+    public Page<Book> getBooksByAuthorNameAndCategoryName(String categoryName, String authorName, Pageable pageable){
         Category category = this.categoryService.getCategoryByName(categoryName);
         Author author = this.authorService.getByFullName(authorName);
         if(category == null || author == null){
-            return Collections.emptyList();
+            return Page.empty();
         }
 
         return this.bookRepository.getBooksByAuthorIdAndCategoryId(author.getId(), category.getId(), pageable);

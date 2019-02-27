@@ -1,0 +1,31 @@
+<div class="margin-bot">
+  <form (ngSubmit)="addBook()" ngNativeValidate>
+    <div class="form-group">
+      <label>Tytuł</label>
+      <input type="text" class="form-control" required="required" [(ngModel)]="newBook.title" name="title"/>
+    </div>
+    <div class="form-group">
+      <label>Opis</label>
+    <textarea type="text" class="form-control" required="required" rows="3" [(ngModel)]="newBook.description" name="description"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Kategoria</label>
+      <select class="form-control" required="required" [(ngModel)]="newBook.categoryName" name="categoryName">
+        <option *ngFor="let cat of categories" value="{{cat.name}}">{{cat.name}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Autor</label>
+      <input type="text" class="form-control" required="required" [(ngModel)]="newBook.authorName" name="authorName"/>
+    </div>
+    <div class="form-group">
+      <label>Ilość stron</label>
+      <input type="number" class="form-control" [(ngModel)]="newBook.numberOfPages" name="numberOfPages"/>
+    </div>
+    <input type="submit" class="btn btn-primary" value="Dodaj"/>
+  </form>
+  <div *ngIf="error" class="alert alert-danger">
+    Książka o takim tytule już istnieje!
+  </div>
+</div>
+

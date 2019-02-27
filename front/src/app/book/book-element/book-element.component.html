@@ -1,0 +1,36 @@
+  <td><button class="btn btn-light" type="button" data-toggle="collapse"
+              [attr.data-target]="'#collapseElement'+book.id" aria-expanded="false"
+              aria-controls="collapseElement">Pokaż więcej</button>
+
+  </td>
+  <td>{{book.title}}</td>
+  <td>{{book.authorName}}</td>
+  <td>{{book.categoryName}}</td>
+  <td>
+    <button class="btn btn-light" (click)="onEditBook(book)">Edytuj</button>
+      <button class="btn btn-light" data-toggle="modal" [attr.data-target]="'#deleteModal'+book.id">
+        Usuń
+      </button>
+  </td>
+
+  <div class="modal fade" id="deleteModal{{book.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Usuwanie książki</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Czy na pewno chcesz usunąć książkę {{book.title}}?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Nie</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="deleteBook(book.id)">Tak</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
