@@ -32,6 +32,10 @@ public class CategoryService {
         return this.categoryRepository.save(category);
     }
 
+    public void edit(Category category){
+        this.categoryRepository.save(category);
+    }
+
     public Optional<Category> getCategoryById(Integer id){
         return this.categoryRepository.findById(id);
     }

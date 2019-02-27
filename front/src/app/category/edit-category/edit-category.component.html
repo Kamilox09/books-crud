@@ -1,0 +1,12 @@
+<div class="margin-bot">
+  <form (ngSubmit)="editCategory()" ngNativeValidate>
+    <div class="form-group">
+      <label>Tytuł</label>
+      <input type="text" class="form-control" required="required" [(ngModel)]="category.name" name="name"/>
+    </div>
+    <input type="submit" class="btn btn-primary" value="Zapisz"/>
+  </form>
+  <div *ngIf="error" class="alert alert-danger">
+    Kategoria o takiej nazwie już istnieje!
+  </div>
+</div>

@@ -12,6 +12,10 @@ import { PaginationComponent } from './shared/pagination/pagination.component';
 import { AddBookComponent } from './book/add-book/add-book.component';
 import {CategoryService} from "./services/category.service";
 import { EditBookComponent } from './book/edit-book/edit-book.component';
+import { CategoryComponent } from './category/category.component';
+import { CategoryElementComponent } from './category/category-element/category-element.component';
+import { AddCategoryComponent } from './category/add-category/add-category.component';
+import { EditCategoryComponent } from './category/edit-category/edit-category.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +24,11 @@ import { EditBookComponent } from './book/edit-book/edit-book.component';
     BookElementComponent,
     PaginationComponent,
     AddBookComponent,
-    EditBookComponent
+    EditBookComponent,
+    CategoryComponent,
+    CategoryElementComponent,
+    AddCategoryComponent,
+    EditCategoryComponent
   ],
   imports: [
     BrowserModule,

@@ -56,6 +56,7 @@ export class BookComponent implements OnInit {
 
   onAdded(): void {
     this.adding = false;
+    this.getBooks();
   }
 
   onAdd(): void {

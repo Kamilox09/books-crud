@@ -4,6 +4,7 @@ package com.crud.books.controller;
 import com.crud.books.dto.CategoryDTO;
 import com.crud.books.model.Category;
 import com.crud.books.service.CategoryService;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -48,43 +49,54 @@ public class CategoryController {
     @PostMapping
     public ResponseEntity<String> createCategory(@Valid @RequestBody CategoryDTO dto) {
         Category category = Mapper.mapToCategoryEntity(dto);
+        JSONObject json = new JSONObject();
 
         category = categoryService.save(category);
         if (category != null) {
-            return new ResponseEntity<String>("Category created.", HttpStatus.OK);
+            json.put("message","Category created.");
+            return new ResponseEntity<String>(json.toJSONString(), HttpStatus.OK);
         }
-        return new ResponseEntity<String>("Category with given name already exists.", HttpStatus.CONFLICT);
+        json.put("message","Category with given name already exists.");
+        return new ResponseEntity<String>(json.toJSONString(), HttpStatus.CONFLICT);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<String> updateCategory(@PathVariable Integer id, @Valid @RequestBody CategoryDTO dto) {
         Optional<Category> check = this.categoryService.getCategoryById(id);
+        JSONObject json = new JSONObject();
 
         if (!check.isPresent()) {
-            return new ResponseEntity<String>("Category you want to update does not exist", HttpStatus.BAD_REQUEST);
+            json.put("message","Category you want to update does not exist");
+            return new ResponseEntity<String>(json.toJSONString(), HttpStatus.BAD_REQUEST);
         }
 
         Category category = check.get();
         CategoryController.mergeCategory(dto, category);
 
-        category = this.categoryService.save(category);
+        /*category = this.categoryService.save(category);
         if (category == null) {
-            return new ResponseEntity<String>("Category with given name already exists.", HttpStatus.CONFLICT);
-        }
-        return new ResponseEntity<String>("Category updated", HttpStatus.OK);
+            json.put("message","Category with given name already exists.");
+            return new ResponseEntity<String>(json.toJSONString(), HttpStatus.CONFLICT);
+        }*/
+        categoryService.edit(category);
+        json.put("message","Category updated" );
+        return new ResponseEntity<String>(json.toJSONString(), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCategory(@PathVariable Integer id) {
         Optional<Category> check = this.categoryService.getCategoryById(id);
+        JSONObject json = new JSONObject();
 
         if (!check.isPresent()) {
-            return new ResponseEntity<String>("Category you want to delete does not exist", HttpStatus.BAD_REQUEST);
+            json.put("message","Category you want to delete does not exist");
+            return new ResponseEntity<String>(json.toJSONString(), HttpStatus.BAD_REQUEST);
         }
 
         this.categoryService.deleteCategory(check.get());
 
-        return new ResponseEntity<String>("Category deleted", HttpStatus.NO_CONTENT);
+        json.put("message","Category deleted");
+        return new ResponseEntity<String>(json.toJSONString(), HttpStatus.NO_CONTENT);
     }
 
     static private void mergeCategory(CategoryDTO dto, Category entity) {
